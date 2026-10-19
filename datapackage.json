@@ -1,0 +1,1398 @@
+{
+  "name": "demoprojecthybride-processed",
+  "title": "Demoproject Hybride: voorbewerkte kwartier- en minuutdata (getypeerde Parquet-tabellen)",
+  "description": "Voorbewerkte meetdata van het Demonstratieproject Hybride Warmtepompen: 174 woningen met een hybride warmtepomp, gemeten van begin 2022 tot 1 juni 2024. Deze repo is niet de data-eigenaar; zie GEBRUIKSVOORWAARDEN.md voor licentie, meldplicht en herkomst, en docs/datacatalogus.md voor de volledige beschrijving van elke tabel. Tijdkolommen zijn tz-aware Europe/Amsterdam. Gegenereerd door dph_preprocessing.datapackage, niet met de hand bijgehouden. Deze kopie beschrijft beide paden samen; elk resource noemt in 'uitvoerpad' de map waar zijn 'path' relatief aan is. Elke run schrijft zijn eigen helft in zijn eigen uitvoermap.",
+  "version": "kwartier-2026-09-22-teller-artefacten+minuut-2026-09-24-lokale-tijd",
+  "licenses": [
+    {
+      "name": "andere",
+      "title": "Geen open licentie voor de data. De dataset mag alleen voor open verwerking gebruikt worden; toepassing, inzichten en rekenmethoden moeten onder eenzelfde licentie openbaar gedeeld en gemeld worden (via data@demoprojecthybride.nl of het KITE-portaal van de RVO). Herverspreiding van de ruwe dataset is niet toegestaan. Zie GEBRUIKSVOORWAARDEN.md in deze repo.",
+      "path": "GEBRUIKSVOORWAARDEN.md"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Demo Project Hybride, KITE-projectpagina (Kennis- en Dataplatform Individuele Technieken)",
+      "path": "https://kennisdelen.rvo.nl/"
+    },
+    {
+      "title": "demoprojecthybride-dataset.zip (zeven CSV's op kwartierbasis, met metadata.csv)",
+      "path": "https://data.inversable.cloud/demoprojecthybride/datasets/demoprojecthybride-dataset.zip",
+      "sha256": "215bcc04fc8c89e1544c0f8a4f011a05cbb2700f5f448341e2592f74bc06f510",
+      "bytes": 393553249
+    },
+    {
+      "title": "Per-minuut-extractie uit de ruwe meettabel achter het KITE-Grafanadashboard (174 Parquet-bestanden, één per locatie); geen openbare URL, toegang aan te vragen via kite@rvo.nl, zie GEBRUIKSVOORWAARDEN.md en ontwerp-extractie.md"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "Smart Energy Foundation (eigenaar en uitvoerder van het project)",
+      "role": "author"
+    },
+    {
+      "title": "Inversable BV (dataverwerking en data-analyse voor het project)",
+      "role": "contributor"
+    },
+    {
+      "title": "Kenniscentrum Duurzaam Leven",
+      "role": "processor"
+    }
+  ],
+  "resources": [
+    {
+      "name": "homes",
+      "title": "Woningkenmerken, één rij per woning",
+      "format": "parquet",
+      "path": "homes.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "woningtype__cat",
+            "type": "string",
+            "description": "Woningtype zoals opgegeven bij aanmelding (bron: house_type)."
+          },
+          {
+            "name": "bouwjaar_klasse__cat",
+            "type": "string",
+            "description": "Bouwjaarklasse van 20 jaar, niet het jaar zelf (bron: construction_year)."
+          },
+          {
+            "name": "oppervlak_klasse__cat",
+            "type": "string",
+            "description": "Klasse van het woonoppervlak, stappen van 50 m² (bron: surface)."
+          },
+          {
+            "name": "energielabel__cat",
+            "type": "string",
+            "description": "Energielabel (bron: energylabel); niet bij elke woning ingevuld."
+          },
+          {
+            "name": "bewoners__cat",
+            "type": "string",
+            "description": "Aantal bewoners als categorie '1' of '2+', geen getal (bron: number_of_inhabitants)."
+          },
+          {
+            "name": "eigendom__cat",
+            "type": "string",
+            "description": "Particulier of woningcorporatie (bron: ownership)."
+          },
+          {
+            "name": "gas_voor_2__m3",
+            "type": "number",
+            "description": "Jaargasverbruik ongeveer twee jaar vóór installatie van de hybride, uit de energiejaarrekening (bron: gas_before_2)."
+          },
+          {
+            "name": "gas_voor_1__m3",
+            "type": "number",
+            "description": "Jaargasverbruik ongeveer één jaar vóór installatie (bron: gas_before_1)."
+          },
+          {
+            "name": "elektra_voor_2__kWh",
+            "type": "number",
+            "description": "Jaarelektriciteitsverbruik ongeveer twee jaar vóór installatie (bron: electricity_before_2)."
+          },
+          {
+            "name": "elektra_voor_1__kWh",
+            "type": "number",
+            "description": "Jaarelektriciteitsverbruik ongeveer één jaar vóór installatie (bron: electricity_before_1)."
+          },
+          {
+            "name": "heeft_vloerverwarming__bool",
+            "type": "boolean",
+            "description": "Lage-temperatuurvloerverwarming aanwezig (bron: has_low_heat_floor_heating)."
+          },
+          {
+            "name": "heeft_radiatoren__bool",
+            "type": "boolean",
+            "description": "Radiatoren aanwezig (bron: has_high_heat_radiator_heating)."
+          },
+          {
+            "name": "heeft_gasfornuis__bool",
+            "type": "boolean",
+            "description": "Koken op gas; False is inductie (bron: has_gas_furnace)."
+          },
+          {
+            "name": "heeft_dubbelglas__bool",
+            "type": "boolean",
+            "description": "Ten minste dubbel glas (bron: has_double_paned_glass)."
+          },
+          {
+            "name": "heeft_dakisolatie__bool",
+            "type": "boolean",
+            "description": "Dakisolatie aanwezig (bron: has_roofinsulation)."
+          },
+          {
+            "name": "heeft_muurisolatie__bool",
+            "type": "boolean",
+            "description": "Muurisolatie aanwezig (bron: has_wallinsulation)."
+          },
+          {
+            "name": "heeft_vloerisolatie__bool",
+            "type": "boolean",
+            "description": "Vloerisolatie aanwezig (bron: has_floorinsulation)."
+          },
+          {
+            "name": "elektrameting_verdacht__cat",
+            "type": "string",
+            "description": "Deugt de elektriciteitsmeting van de warmtepomp: '0' bruikbaar, '1' onbruikbaar, '2' tijdens het project gerepareerd (bron: wrong_elec_measurement; niet in metadata.csv, betekenis uit notebooks/README.md van het analysepakket)."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Eén rij per woning uit household.csv (tabellen.build_homes).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "measurements",
+      "title": "Cumulatieve meterstanden per kwartier",
+      "format": "parquet",
+      "path": "measurements.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "tijdstip_start",
+            "type": "datetime",
+            "description": "Begin van het kwartier [tijdstip_start, tijdstip_start + 15 min), afgeleid als floor(tijdstip_meting, 15 min). Tz-aware Europe/Amsterdam; de bron is UTC en het instant is ongewijzigd. Roostersleutel; de stand hoort bij tijdstip_meting.",
+            "format": "default"
+          },
+          {
+            "name": "tijdstip_meting",
+            "type": "datetime",
+            "description": "Originele tijdstempel van de meting; als meer bronnen in het kwartier vallen de eerste beschikbare in de volgorde dsmr, kamstrup, heatpump, boiler. Tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "e_import_laag_cum__kWh",
+            "type": "number",
+            "description": "Meterstand afgenomen elektriciteit, laagtarief (bron: dsmr.e_consumed_low). NaN bij een initialisatietelegram of nulmeting."
+          },
+          {
+            "name": "e_import_hoog_cum__kWh",
+            "type": "number",
+            "description": "Meterstand afgenomen elektriciteit, normaaltarief (bron: dsmr.e_consumed_high). NaN bij een initialisatietelegram of nulmeting."
+          },
+          {
+            "name": "e_export_laag_cum__kWh",
+            "type": "number",
+            "description": "Meterstand teruggeleverde elektriciteit, laagtarief (bron: dsmr.e_delivered_low). NaN bij een initialisatietelegram of nulmeting."
+          },
+          {
+            "name": "e_export_hoog_cum__kWh",
+            "type": "number",
+            "description": "Meterstand teruggeleverde elektriciteit, normaaltarief (bron: dsmr.e_delivered_high). NaN bij een initialisatietelegram of nulmeting."
+          },
+          {
+            "name": "g_gebruik_cum__m3",
+            "type": "number",
+            "description": "Meterstand gas (bron: dsmr.v_gas_consumed). NaN bij een initialisatietelegram of nulmeting."
+          },
+          {
+            "name": "e_warmtepomp_cum__kWh",
+            "type": "number",
+            "description": "Meterstand elektriciteitsverbruik van de warmtepomp, aparte kWh-meter (bron: heatpump.energy). NaN bij een nulmeting."
+          },
+          {
+            "name": "e_ketel_cum__kWh",
+            "type": "number",
+            "description": "Meterstand elektriciteitsverbruik van de cv-ketel, niet het gas (bron: boiler.energy). NaN bij een nulmeting."
+          },
+          {
+            "name": "q_geleverd_cum__J",
+            "type": "number",
+            "description": "Meterstand geleverde warmte van de warmtemeter (bron: kamstrup.e_thermal_system, GJ x 10^9). NaN bij een nulmeting."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "tijdstip_start"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Elke bron is per (woning, kwartier) ontdubbeld vóór de outer-merge (tabellen.resolveer_domein).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "derived",
+      "title": "Gemiddeld vermogen per kwartier, momentane steekproeven en gekoppeld weer",
+      "format": "parquet",
+      "path": "derived.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "tijdstip_start",
+            "type": "datetime",
+            "description": "Begin van het kwartier [tijdstip_start, tijdstip_start + 15 min), afgeleid als floor(tijdstip_meting, 15 min). Tz-aware Europe/Amsterdam; de bron is UTC en het instant is ongewijzigd.",
+            "format": "default"
+          },
+          {
+            "name": "g_gebruik__W",
+            "type": "number",
+            "description": "Gasvermogen, gemiddeld over het interval tot de volgende aflezing van dezelfde woning: verschil van de teller gedeeld door de werkelijke intervalduur. NaN op de laatste rij van een woning en op een interval met een gemaskeerde stand of een tellerwissel. Van m³ naar J met actual_gas_std_hhv__J_m_3 van het uur waarin het interval begint."
+          },
+          {
+            "name": "p_warmtepomp__W",
+            "type": "number",
+            "description": "Elektrisch vermogen van de warmtepomp uit e_warmtepomp_cum__kWh, gemiddeld over het interval tot de volgende aflezing van dezelfde woning: verschil van de teller gedeeld door de werkelijke intervalduur. NaN op de laatste rij van een woning en op een interval met een gemaskeerde stand of een tellerwissel."
+          },
+          {
+            "name": "p_ketel__W",
+            "type": "number",
+            "description": "Elektrisch vermogen van de cv-ketel (niet het gas) uit e_ketel_cum__kWh, gemiddeld over het interval tot de volgende aflezing van dezelfde woning: verschil van de teller gedeeld door de werkelijke intervalduur. NaN op de laatste rij van een woning en op een interval met een gemaskeerde stand of een tellerwissel."
+          },
+          {
+            "name": "q_geleverd__W",
+            "type": "number",
+            "description": "Geleverd warmtevermogen uit q_geleverd_cum__J, gemiddeld over het interval tot de volgende aflezing van dezelfde woning: verschil van de teller gedeeld door de werkelijke intervalduur. NaN op de laatste rij van een woning en op een interval met een gemaskeerde stand of een tellerwissel."
+          },
+          {
+            "name": "e_net__W",
+            "type": "number",
+            "description": "Netto elektriciteitsvermogen van de woning uit (import laag + hoog) min (export laag + hoog), gemiddeld over het interval tot de volgende aflezing van dezelfde woning: verschil van de teller gedeeld door de werkelijke intervalduur. NaN op de laatste rij van een woning en op een interval met een gemaskeerde stand of een tellerwissel. Mag negatief zijn bij teruglevering."
+          },
+          {
+            "name": "actual_gas_std_hhv__J_m_3",
+            "type": "number",
+            "description": "Toegepaste calorische bovenwaarde van het gas: landelijk uurgemiddelde over de netgebieden met G-gas (mijnenergiedata.nl), of 35,17 MJ/m³ als terugval. Nooit leeg."
+          },
+          {
+            "name": "gas_hhv_bron__cat",
+            "type": "string",
+            "description": "Herkomst van actual_gas_std_hhv__J_m_3: 'mijnenergiedata_actueel' of 'vast_gemiddelde_fallback'."
+          },
+          {
+            "name": "u_L1_meting__V",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, spanning fase 1 (bron: dsmr.u_L1)."
+          },
+          {
+            "name": "u_L2_meting__V",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, spanning fase 2 (bron: dsmr.u_L2)."
+          },
+          {
+            "name": "u_L3_meting__V",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, spanning fase 3 (bron: dsmr.u_L3)."
+          },
+          {
+            "name": "i_L1_meting__A",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, stroom fase 1 (bron: dsmr.i_L1)."
+          },
+          {
+            "name": "i_L2_meting__A",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, stroom fase 2 (bron: dsmr.i_L2)."
+          },
+          {
+            "name": "i_L3_meting__A",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, stroom fase 3 (bron: dsmr.i_L3)."
+          },
+          {
+            "name": "p_import_L1_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, afgenomen vermogen fase 1 (bron: dsmr.p_consumed_L1, kW x 1000)."
+          },
+          {
+            "name": "p_import_L2_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, afgenomen vermogen fase 2 (bron: dsmr.p_consumed_L2, kW x 1000)."
+          },
+          {
+            "name": "p_import_L3_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, afgenomen vermogen fase 3 (bron: dsmr.p_consumed_L3, kW x 1000)."
+          },
+          {
+            "name": "p_export_L1_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, teruggeleverd vermogen fase 1 (bron: dsmr.p_delivered_L1, kW x 1000)."
+          },
+          {
+            "name": "p_export_L2_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, teruggeleverd vermogen fase 2 (bron: dsmr.p_delivered_L2, kW x 1000)."
+          },
+          {
+            "name": "p_export_L3_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, teruggeleverd vermogen fase 3 (bron: dsmr.p_delivered_L3, kW x 1000)."
+          },
+          {
+            "name": "temp_aanvoer_meting__degC",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, aanvoertemperatuur van de warmtemeter (bron: kamstrup.t_supply)."
+          },
+          {
+            "name": "temp_retour_meting__degC",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, retourtemperatuur van de warmtemeter (bron: kamstrup.t_return)."
+          },
+          {
+            "name": "debiet_meting__dm3_s_1",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, debiet van de warmtemeter (bron: kamstrup.f_system, L/h / 3600)."
+          },
+          {
+            "name": "q_geleverd_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, warmtevermogen van de warmtemeter (bron: kamstrup.p_thermal_system, kW x 1000)."
+          },
+          {
+            "name": "p_warmtepomp_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, elektrisch vermogen van de warmtepomp (bron: heatpump.power)."
+          },
+          {
+            "name": "p_ketel_meting__W",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, elektrisch vermogen van de cv-ketel (bron: boiler.power)."
+          },
+          {
+            "name": "temp_binnen_meting__degC",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, woonkamertemperatuur (bron: room.temperature)."
+          },
+          {
+            "name": "rv_binnen_meting__0",
+            "type": "number",
+            "description": "Momentane steekproef op het meetmoment van de bron, geen intervalgemiddelde, relatieve luchtvochtigheid als fractie (bron: room.humidity / 100)."
+          },
+          {
+            "name": "temp_buiten__degC",
+            "type": "number",
+            "description": "Buitentemperatuur van het KNMI-uur waarin tijdstip_start valt, van het station van de woning (uit weer)."
+          },
+          {
+            "name": "wind__m_s_1",
+            "type": "number",
+            "description": "Uurgemiddelde windsnelheid van het KNMI-uur waarin tijdstip_start valt (uit weer)."
+          },
+          {
+            "name": "ghi__W_m_2",
+            "type": "number",
+            "description": "Gemiddelde globale instraling over het KNMI-uur waarin tijdstip_start valt (uit weer)."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "tijdstip_start"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Rijen van measurements met left-joins op unieke sleutels (tabellen.build_derived).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "weer",
+      "title": "KNMI-uurwaarden per station",
+      "format": "parquet",
+      "path": "weer.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "weerstation_nr",
+            "type": "integer",
+            "description": "KNMI-stationsnummer, het dichtstbijzijnde station van de woningen die het gebruiken (bron: knmi.station_code)."
+          },
+          {
+            "name": "tijdstip_start",
+            "type": "datetime",
+            "description": "Begin van het KNMI-uur [tijdstip_start, tijdstip_start + 1 h). De bron is eind-gelabeld en is één uur teruggeschoven. Tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "temp_buiten__degC",
+            "type": "number",
+            "description": "Buitentemperatuur (bron: knmi.T, 0,1 °C / 10)."
+          },
+          {
+            "name": "wind__m_s_1",
+            "type": "number",
+            "description": "Uurgemiddelde windsnelheid (bron: knmi.FH, 0,1 m/s / 10)."
+          },
+          {
+            "name": "ghi__W_m_2",
+            "type": "number",
+            "description": "Gemiddelde globale instraling over het uur (bron: knmi.Q, J/cm² per uur x 10^4 / 3600)."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "weerstation_nr",
+          "tijdstip_start"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Gegroepeerd op (station, uur) en over chunks ontdubbeld (tabellen.build_weer, chunking.voeg_weer_samen).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "quality",
+      "title": "Kwaliteitsvlaggen op het volledige kwartierrooster",
+      "format": "parquet",
+      "path": "quality.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "tijdstip_start",
+            "type": "datetime",
+            "description": "Begin van het kwartier [tijdstip_start, tijdstip_start + 15 min), afgeleid als floor(tijdstip_meting, 15 min). Tz-aware Europe/Amsterdam; de bron is UTC en het instant is ongewijzigd. Volledig rooster van het eerste tot het laatste waargenomen kwartier per woning.",
+            "format": "default"
+          },
+          {
+            "name": "ontbrekend__bool",
+            "type": "boolean",
+            "description": "True als geen van de vier tellerbronnen (dsmr, kamstrup, heatpump, boiler) een meting heeft in dit kwartier. Zo'n rij staat alleen in quality; de andere vlaggen zijn er leeg."
+          },
+          {
+            "name": "scheef__bool",
+            "type": "boolean",
+            "description": "True als bij minstens één tellerbron de meting meer dan 300 s na de kwartiergrens lag; leeg als geen bron een meting had."
+          },
+          {
+            "name": "teller_initialisatie__bool",
+            "type": "boolean",
+            "description": "True als de vijf DSMR-registers tegelijk exact op de sentinel van het initialisatietelegram staan (8969,994, 8789,167, 3433,300 en 8299,146 kWh, 5059,199 m³); die standen zijn in measurements NaN."
+          },
+          {
+            "name": "teller_nulmeting__bool",
+            "type": "boolean",
+            "description": "True als minstens één van de acht brontellers exact 0,0 leest terwijl die teller bij deze woning eerder boven 1 stond (lopend maximum zonder deze rij); die stand is in measurements NaN."
+          },
+          {
+            "name": "teller_wissel__bool",
+            "type": "boolean",
+            "description": "True als minstens één van de acht brontellers daalt naar de volgende rij van dezelfde woning, na maskering van sentinel en nulmeting; het vermogen van dat ene interval is NaN, de stand niet."
+          },
+          {
+            "name": "teller_terug__bool",
+            "type": "boolean",
+            "description": "OR van teller_nulmeting__bool en teller_wissel__bool; e_net telt niet mee."
+          },
+          {
+            "name": "teruglevering__bool",
+            "type": "boolean",
+            "description": "True als e_export_laag_cum__kWh of e_export_hoog_cum__kWh stijgt naar de volgende rij; leeg als geen van beide een interval heeft."
+          },
+          {
+            "name": "teller_sprong__bool",
+            "type": "boolean",
+            "description": "True als de absolute waarde van een intervalvermogen boven zijn drempel ligt: e_net__W 40 kW, g_gebruik__W 100 kW, p_warmtepomp__W 10 kW, p_ketel__W 1 kW, q_geleverd__W 50 kW; leeg als alle vijf NaN zijn."
+          },
+          {
+            "name": "bron_incompleet__bool",
+            "type": "boolean",
+            "description": "True als niet alle vier de tellerbronnen een meting hebben in dit kwartier."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "tijdstip_start"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Een regelmatig rooster per woning met left-joins op unieke sleutels (quality.bouw_tijdas).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "scheefheid",
+      "title": "Afwijking van het meetmoment tot de kwartiergrens, per woning en bron (geen contracttabel)",
+      "format": "parquet",
+      "path": "scheefheid.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "bron",
+            "type": "string",
+            "description": "Tellerbron: dsmr, kamstrup, heatpump of boiler."
+          },
+          {
+            "name": "mediaan__s",
+            "type": "number",
+            "description": "Mediaan van tijdstip_meting - tijdstip_start over de metingen van deze bron bij deze woning."
+          },
+          {
+            "name": "p95__s",
+            "type": "number",
+            "description": "95e percentiel van dezelfde afwijking."
+          },
+          {
+            "name": "max__s",
+            "type": "number",
+            "description": "Grootste afwijking."
+          },
+          {
+            "name": "n",
+            "type": "integer",
+            "description": "Aantal metingen waarover gerekend is."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "bron"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Eén rij per woning en bron (tabellen.bouw_scheefheid_samenvatting).",
+      "uitvoerpad": "de uitvoermap van pipeline.run (standaard data/processed)"
+    },
+    {
+      "name": "metingen",
+      "title": "Minuutdata per locatie: momentane gemiddelden, tellerstanden, afgeleide vermogens en vlaggen",
+      "format": "parquet",
+      "path": "metingen/location_id=*.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "tijdstip_start",
+            "type": "datetime",
+            "description": "Begin van de minuut [tijdstip_start, tijdstip_start + 1 min), in de extractie al op de minuutgrens. Tz-aware Europe/Amsterdam; intern UTC.",
+            "format": "default"
+          },
+          {
+            "name": "temp_aanvoer__degC",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_t_supply). Buiten [-10, 100] NaN en onplausibel__bool."
+          },
+          {
+            "name": "temp_retour__degC",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_t_return). Buiten [-10, 100] NaN en onplausibel__bool."
+          },
+          {
+            "name": "q_geleverd_gemeten__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_p_thermal_system). Buiten [-2000, 60000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "debiet__dm3_s_1",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_f_system). Buiten [-1, 10] NaN en onplausibel__bool."
+          },
+          {
+            "name": "p_warmtepomp_gemeten__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: heatpump_power). Buiten [-100, 15000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "u_warmtepomp__V",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: heatpump_voltage). Buiten [150, 300] NaN en onplausibel__bool."
+          },
+          {
+            "name": "i_warmtepomp__A",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: heatpump_current)."
+          },
+          {
+            "name": "p_ketel_gemeten__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: boiler_power). Buiten [-100, 5000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "u_ketel__V",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: boiler_voltage). Buiten [150, 300] NaN en onplausibel__bool."
+          },
+          {
+            "name": "i_ketel__A",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: boiler_current)."
+          },
+          {
+            "name": "u_L1__V",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_u_L1). Buiten [150, 300] NaN en onplausibel__bool."
+          },
+          {
+            "name": "u_L2__V",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_u_L2). Buiten [150, 300] NaN en onplausibel__bool."
+          },
+          {
+            "name": "u_L3__V",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_u_L3). Buiten [150, 300] NaN en onplausibel__bool."
+          },
+          {
+            "name": "i_L1__A",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_i_L1)."
+          },
+          {
+            "name": "i_L2__A",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_i_L2)."
+          },
+          {
+            "name": "i_L3__A",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_i_L3)."
+          },
+          {
+            "name": "p_import_L1__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_consumed_L1)."
+          },
+          {
+            "name": "p_import_L2__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_consumed_L2)."
+          },
+          {
+            "name": "p_import_L3__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_consumed_L3)."
+          },
+          {
+            "name": "p_export_L1__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_delivered_L1)."
+          },
+          {
+            "name": "p_export_L2__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_delivered_L2)."
+          },
+          {
+            "name": "p_export_L3__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: dsmr_p_delivered_L3)."
+          },
+          {
+            "name": "temp_binnen__degC",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: sonoff_temperature). Buiten [-10, 60] NaN en onplausibel__bool."
+          },
+          {
+            "name": "rv_binnen__0",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: sonoff_humidity). Buiten [0, 1] NaN en onplausibel__bool."
+          },
+          {
+            "name": "p_warmtepomp_gemeten_min__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: heatpump_power_min). Buiten [-100, 15000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "p_warmtepomp_gemeten_max__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: heatpump_power_max). Buiten [-100, 15000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "p_ketel_gemeten_min__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: boiler_power_min). Buiten [-100, 5000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "p_ketel_gemeten_max__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: boiler_power_max). Buiten [-100, 5000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "q_geleverd_gemeten_min__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_p_thermal_system_min). Buiten [-2000, 60000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "q_geleverd_gemeten_max__W",
+            "type": "number",
+            "description": "Gemiddelde over de metingen in deze minuut, een intervalgemiddelde en geen steekproef (bron: kamstrup_p_thermal_system_max). Buiten [-2000, 60000] NaN en onplausibel__bool."
+          },
+          {
+            "name": "e_import_laag_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: dsmr_e_consumed_low_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "e_import_hoog_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: dsmr_e_consumed_high_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "e_export_laag_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: dsmr_e_delivered_low_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "e_export_hoog_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: dsmr_e_delivered_high_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "g_gebruik_cum__m3",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: dsmr_v_gas_consumed_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "g_gebruik__m3_s_1",
+            "type": "number",
+            "description": "Gasdebiet uit g_gebruik_cum__m3 tot de volgende minuut, in m³/s; niet omgerekend naar W."
+          },
+          {
+            "name": "e_warmtepomp_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: heatpump_energy_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "p_warmtepomp__W",
+            "type": "number",
+            "description": "Elektrisch vermogen van de warmtepomp uit e_warmtepomp_cum__kWh tot de volgende minuut."
+          },
+          {
+            "name": "e_ketel_cum__kWh",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: boiler_energy_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "p_ketel__W",
+            "type": "number",
+            "description": "Elektrisch vermogen van de cv-ketel uit e_ketel_cum__kWh tot de volgende minuut."
+          },
+          {
+            "name": "q_geleverd_cum__J",
+            "type": "number",
+            "description": "Tellerstand aan het begin van de minuut (bron: kamstrup_e_thermal_system_eerste). NaN bij een nulmeting."
+          },
+          {
+            "name": "q_geleverd__W",
+            "type": "number",
+            "description": "Warmtevermogen uit q_geleverd_cum__J tot de volgende minuut."
+          },
+          {
+            "name": "e_net_cum__kWh",
+            "type": "number",
+            "description": "Samengestelde stand (import laag + hoog) min (export laag + hoog), na maskering van nulmetingen."
+          },
+          {
+            "name": "e_net__W",
+            "type": "number",
+            "description": "Netto elektriciteitsvermogen uit e_net_cum__kWh tot de volgende minuut; mag negatief zijn en mag dalen."
+          },
+          {
+            "name": "delta_t__s",
+            "type": "number",
+            "description": "Werkelijke tijd tot de volgende aanwezige minuut van deze locatie; NaN op de laatste rij."
+          },
+          {
+            "name": "n_g1",
+            "type": "integer",
+            "description": "Aantal ruwe metingen van meetgroep 1 achter de gemiddelden van deze minuut."
+          },
+          {
+            "name": "n_g2",
+            "type": "integer",
+            "description": "Aantal ruwe metingen van meetgroep 2 achter de gemiddelden van deze minuut."
+          },
+          {
+            "name": "n_g3",
+            "type": "integer",
+            "description": "Aantal ruwe metingen van meetgroep 3 achter de gemiddelden van deze minuut."
+          },
+          {
+            "name": "offset_eerste_g1__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de eerste meting van meetgroep 1."
+          },
+          {
+            "name": "offset_eerste_g2__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de eerste meting van meetgroep 2."
+          },
+          {
+            "name": "offset_eerste_g3__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de eerste meting van meetgroep 3."
+          },
+          {
+            "name": "offset_laatste_g1__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de laatste meting van meetgroep 1."
+          },
+          {
+            "name": "offset_laatste_g2__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de laatste meting van meetgroep 2."
+          },
+          {
+            "name": "offset_laatste_g3__ms",
+            "type": "integer",
+            "description": "Milliseconden na de minuutgrens van de laatste meting van meetgroep 3."
+          },
+          {
+            "name": "teller_nulmeting__bool",
+            "type": "boolean",
+            "description": "True als minstens één brontteller exact 0,0 leest terwijl die teller bij deze locatie eerder boven 1 stond; die stand is NaN."
+          },
+          {
+            "name": "teller_terug__bool",
+            "type": "boolean",
+            "description": "True als minstens één brontteller daalt naar de volgende minuut, na maskering van nulmetingen. Een daling naar een nulmeting valt hier niet onder (die stand is NaN), dus anders dan in het kwartierpad is dit niet de OR met teller_nulmeting__bool."
+          },
+          {
+            "name": "teller_wissel__bool",
+            "type": "boolean",
+            "description": "True als minstens één brontteller daalt naar de volgende minuut en die volgende stand geen nulmeting is; het vermogen van dat interval is NaN, de stand niet."
+          },
+          {
+            "name": "teruglevering__bool",
+            "type": "boolean",
+            "description": "True als een van de twee exporttellers stijgt naar de volgende minuut."
+          },
+          {
+            "name": "onplausibel__bool",
+            "type": "boolean",
+            "description": "True als minstens één momentane kolom met een grens (minuut.GRENZEN) buiten die grens lag; die waarde is NaN. Een exacte 0,0 op u_L1__V, u_L2__V of u_L3__V gaat wel op NaN maar zet de vlag niet."
+          },
+          {
+            "name": "gat_na__bool",
+            "type": "boolean",
+            "description": "True als delta_t__s groter is dan 60 s: na deze minuut ontbreekt er minstens één."
+          },
+          {
+            "name": "uitval_na__bool",
+            "type": "boolean",
+            "description": "True als delta_t__s groter is dan 86.400 s: na deze minuut volgt een gat van meer dan 24 uur."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "tijdstip_start"
+        ]
+      },
+      "primaryKeyOnderbouwing": "De extractie levert één rij per (locatie, minuut) (ontwerp-extractie.md §6).",
+      "uitvoerpad": "de uitvoermap van minuut.run (--doel)"
+    },
+    {
+      "name": "homes_minuut",
+      "title": "Kenmerken per locatie uit de minuutpas",
+      "format": "parquet",
+      "path": "homes_minuut.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "n_minuten",
+            "type": "integer",
+            "description": "Aantal aanwezige minuten."
+          },
+          {
+            "name": "eerste_minuut",
+            "type": "datetime",
+            "description": "Eerste aanwezige minuut, tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "laatste_minuut",
+            "type": "datetime",
+            "description": "Laatste aanwezige minuut, tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "bezetting__0",
+            "type": "number",
+            "description": "n_minuten gedeeld door het aantal minuten van eerste_minuut tot en met laatste_minuut."
+          },
+          {
+            "name": "grootste_gat__min",
+            "type": "integer",
+            "description": "Duur van het langste gat, in ontbrekende minuten."
+          },
+          {
+            "name": "n_gaten",
+            "type": "integer",
+            "description": "Aantal gaten."
+          },
+          {
+            "name": "n_uitval",
+            "type": "integer",
+            "description": "Aantal gaten van meer dan 1440 ontbrekende minuten."
+          },
+          {
+            "name": "warmtepompkanaal_dood__bool",
+            "type": "boolean",
+            "description": "True als p_warmtepomp_gemeten__W over de hele periode nooit boven 200 W komt."
+          },
+          {
+            "name": "p_warmtepomp_max__W",
+            "type": "number",
+            "description": "Hoogste p_warmtepomp_gemeten__W van de locatie."
+          },
+          {
+            "name": "n_onplausibel",
+            "type": "integer",
+            "description": "Aantal minuten met onplausibel__bool."
+          },
+          {
+            "name": "n_teller_terug",
+            "type": "integer",
+            "description": "Aantal minuten met teller_terug__bool."
+          },
+          {
+            "name": "n_teller_nulmeting",
+            "type": "integer",
+            "description": "Aantal minuten met teller_nulmeting__bool."
+          },
+          {
+            "name": "n_teller_wissel",
+            "type": "integer",
+            "description": "Aantal minuten met teller_wissel__bool."
+          },
+          {
+            "name": "bereik_n",
+            "type": "integer",
+            "description": "Aantal proefminuten: in reeksen van minstens 10 minuten met de warmtepomp onder 200 W en de ketel boven 20 W."
+          },
+          {
+            "name": "bereik_fractie",
+            "type": "number",
+            "description": "Aandeel van de proefminuten waarin q_geleverd_gemeten__W boven 2 % van het locatiemaximum ligt."
+          },
+          {
+            "name": "bereik_controle",
+            "type": "number",
+            "description": "Zelfde aandeel in reeksen met warmtepomp onder 200 W en ketel hoogstens 20 W; hoort bijna 0 te zijn."
+          },
+          {
+            "name": "bereik_referentie",
+            "type": "number",
+            "description": "Zelfde aandeel in minuten met de warmtepomp op of boven 200 W; hoort hoog te zijn."
+          },
+          {
+            "name": "warmtemeter_bereik__cat",
+            "type": "string",
+            "description": "'systeem' als bereik_fractie > 0,15, 'warmtepomp' als < 0,01, anders of zonder proefminuten 'onbeslist'."
+          },
+          {
+            "name": "raster_e_import_laag_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_import_laag_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_import_laag_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_import_laag_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_e_import_hoog_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_import_hoog_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_import_hoog_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_import_hoog_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_e_export_laag_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_export_laag_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_export_laag_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_export_laag_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_e_export_hoog_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_export_hoog_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_export_hoog_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_export_hoog_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_g_gebruik_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van g_gebruik_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_g_gebruik_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van g_gebruik_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_e_warmtepomp_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_warmtepomp_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_warmtepomp_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_warmtepomp_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_e_ketel_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van e_ketel_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_e_ketel_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van e_ketel_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "raster_q_geleverd_cum__W",
+            "type": "number",
+            "description": "Stap in het minuutvermogen die het float32-raster bij de hoogste stand van q_geleverd_cum oplegt (raster x omrekening naar J / 60 s); NaN voor een teller die geen energie meet."
+          },
+          {
+            "name": "raster_breuk_q_geleverd_cum__bool",
+            "type": "boolean",
+            "description": "True als de stand van q_geleverd_cum binnen de periode een macht van twee passeert boven de stand waar het float32-raster de metertik haalt: het raster verdubbelt dan middenin de reeks."
+          },
+          {
+            "name": "dekking_temp_aanvoer__degC",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin temp_aanvoer__degC gevuld is."
+          },
+          {
+            "name": "dekking_temp_retour__degC",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin temp_retour__degC gevuld is."
+          },
+          {
+            "name": "dekking_q_geleverd_gemeten__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin q_geleverd_gemeten__W gevuld is."
+          },
+          {
+            "name": "dekking_debiet__dm3_s_1",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin debiet__dm3_s_1 gevuld is."
+          },
+          {
+            "name": "dekking_p_warmtepomp_gemeten__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_warmtepomp_gemeten__W gevuld is."
+          },
+          {
+            "name": "dekking_u_warmtepomp__V",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin u_warmtepomp__V gevuld is."
+          },
+          {
+            "name": "dekking_i_warmtepomp__A",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin i_warmtepomp__A gevuld is."
+          },
+          {
+            "name": "dekking_p_ketel_gemeten__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_ketel_gemeten__W gevuld is."
+          },
+          {
+            "name": "dekking_u_ketel__V",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin u_ketel__V gevuld is."
+          },
+          {
+            "name": "dekking_i_ketel__A",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin i_ketel__A gevuld is."
+          },
+          {
+            "name": "dekking_u_L1__V",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin u_L1__V gevuld is."
+          },
+          {
+            "name": "dekking_u_L2__V",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin u_L2__V gevuld is."
+          },
+          {
+            "name": "dekking_u_L3__V",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin u_L3__V gevuld is."
+          },
+          {
+            "name": "dekking_i_L1__A",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin i_L1__A gevuld is."
+          },
+          {
+            "name": "dekking_i_L2__A",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin i_L2__A gevuld is."
+          },
+          {
+            "name": "dekking_i_L3__A",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin i_L3__A gevuld is."
+          },
+          {
+            "name": "dekking_p_import_L1__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_import_L1__W gevuld is."
+          },
+          {
+            "name": "dekking_p_import_L2__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_import_L2__W gevuld is."
+          },
+          {
+            "name": "dekking_p_import_L3__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_import_L3__W gevuld is."
+          },
+          {
+            "name": "dekking_p_export_L1__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_export_L1__W gevuld is."
+          },
+          {
+            "name": "dekking_p_export_L2__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_export_L2__W gevuld is."
+          },
+          {
+            "name": "dekking_p_export_L3__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_export_L3__W gevuld is."
+          },
+          {
+            "name": "dekking_temp_binnen__degC",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin temp_binnen__degC gevuld is."
+          },
+          {
+            "name": "dekking_rv_binnen__0",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin rv_binnen__0 gevuld is."
+          },
+          {
+            "name": "dekking_p_warmtepomp_gemeten_min__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_warmtepomp_gemeten_min__W gevuld is."
+          },
+          {
+            "name": "dekking_p_warmtepomp_gemeten_max__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_warmtepomp_gemeten_max__W gevuld is."
+          },
+          {
+            "name": "dekking_p_ketel_gemeten_min__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_ketel_gemeten_min__W gevuld is."
+          },
+          {
+            "name": "dekking_p_ketel_gemeten_max__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin p_ketel_gemeten_max__W gevuld is."
+          },
+          {
+            "name": "dekking_q_geleverd_gemeten_min__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin q_geleverd_gemeten_min__W gevuld is."
+          },
+          {
+            "name": "dekking_q_geleverd_gemeten_max__W",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin q_geleverd_gemeten_max__W gevuld is."
+          },
+          {
+            "name": "dekking_e_import_laag_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_import_laag_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_e_import_hoog_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_import_hoog_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_e_export_laag_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_export_laag_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_e_export_hoog_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_export_hoog_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_g_gebruik_cum__m3",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin g_gebruik_cum__m3 gevuld is."
+          },
+          {
+            "name": "dekking_e_warmtepomp_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_warmtepomp_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_e_ketel_cum__kWh",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin e_ketel_cum__kWh gevuld is."
+          },
+          {
+            "name": "dekking_q_geleverd_cum__J",
+            "type": "number",
+            "description": "Aandeel van de aanwezige minuten waarin q_geleverd_cum__J gevuld is."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Een hervatte run vervangt de rij van een locatie in plaats van er een naast te zetten (minuut._schrijf_verzamelingen).",
+      "uitvoerpad": "de uitvoermap van minuut.run (--doel)"
+    },
+    {
+      "name": "gaten",
+      "title": "Gaten in het minuutrooster, per locatie",
+      "format": "parquet",
+      "path": "gaten.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "begin",
+            "type": "datetime",
+            "description": "Eerste ontbrekende minuut, tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "eind",
+            "type": "datetime",
+            "description": "Eerste aanwezige minuut na het gat, tz-aware Europe/Amsterdam.",
+            "format": "default"
+          },
+          {
+            "name": "duur__min",
+            "type": "integer",
+            "description": "Aantal ontbrekende minuten."
+          },
+          {
+            "name": "soort",
+            "type": "string",
+            "description": "'uitval' als duur__min groter is dan 1440, anders 'hapering'."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "begin"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Gaten binnen een locatie overlappen niet, dus hun begin is uniek.",
+      "uitvoerpad": "de uitvoermap van minuut.run (--doel)"
+    },
+    {
+      "name": "dekking",
+      "title": "Aaneengesloten bruikbare tijd per locatie, kolom en overbruggingsgrens",
+      "format": "parquet",
+      "path": "dekking.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "home_id__str",
+            "type": "string",
+            "description": "Gepseudonimiseerde woningsleutel van acht tekens (bron: location_id; in household.csv participant_id)."
+          },
+          {
+            "name": "kolom__str",
+            "type": "string",
+            "description": "Kolom van metingen waarvoor de dekking geldt, of 'cop_combo__p_warmtepomp_en_q_geleverd' voor de COP-combinatie zonder de locaties met een dood warmtepompkanaal."
+          },
+          {
+            "name": "drempel__min",
+            "type": "number",
+            "description": "Overbruggingsgrens k: gaten van hoogstens k minuten tellen als gedekt. 0 is de referentie zonder overbrugging."
+          },
+          {
+            "name": "totale_tijd__min",
+            "type": "number",
+            "description": "Minuten van eerste_minuut tot en met laatste_minuut."
+          },
+          {
+            "name": "gedekte_tijd__min",
+            "type": "number",
+            "description": "totale_tijd__min min de duur van alle gaten langer dan drempel__min."
+          },
+          {
+            "name": "aandeel_gedekt",
+            "type": "number",
+            "description": "gedekte_tijd__min gedeeld door totale_tijd__min."
+          }
+        ],
+        "missingValues": [
+          ""
+        ],
+        "primaryKey": [
+          "home_id__str",
+          "kolom__str",
+          "drempel__min"
+        ]
+      },
+      "primaryKeyOnderbouwing": "Elke drempel één keer (minuut_dekking.STANDAARD_DREMPELS__min). De dekking.parquet van de minuutrun van 24-09-2026 is ouder dan die regel en heeft drempel 0 per kolom twee keer.",
+      "uitvoerpad": "de uitvoermap van minuut.run (--doel)"
+    }
+  ]
+}

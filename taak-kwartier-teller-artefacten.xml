@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Description>Herverwerking van het kwartierpad na de reparatie van de drie teller-artefacten (ontwerp-teller-artefacten.md, Fase C), onbeheerd en losgekoppeld van de sessie die de taak aanmaakte. Registreren met: schtasks /create /tn "DPH-kwartier-teller-artefacten" /xml taak-kwartier-teller-artefacten.xml /f</Description>
+    <URI>\DPH-kwartier-teller-artefacten</URI>
+  </RegistrationInfo>
+  <Principals>
+    <Principal id="Author">
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <!-- Zelfde motivatie als taak-minuut.xml: prioriteit 4 (normaal) i.p.v. de standaard 7, anders
+         kruipt de run op een bezette machine. -->
+    <Priority>4</Priority>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <ExecutionTimeLimit>PT4H</ExecutionTimeLimit>
+    <IdleSettings>
+      <StopOnIdleEnd>false</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+  </Settings>
+  <Triggers>
+    <TimeTrigger>
+      <StartBoundary>2026-09-22T16:40:00</StartBoundary>
+    </TimeTrigger>
+  </Triggers>
+  <Actions Context="Author">
+    <Exec>
+      <Command>C:\dev\demoprojecthybride-dataset-preprocessing\draai_kwartier_teller_artefacten.cmd</Command>
+    </Exec>
+  </Actions>
+</Task>

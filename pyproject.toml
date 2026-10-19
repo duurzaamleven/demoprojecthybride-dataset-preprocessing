@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dph-preprocessing"
+version = "0.1.0"
+description = "Preprocessing van de Demoproject Hybride-dataset naar getypeerde, herleidbare Parquet-tabellen (raw -> standardized -> derived)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
+]
+dependencies = [
+    "pandas>=2.2,<4",
+    "numpy>=1.26,<3",
+    "pyarrow>=17,<26",
+]
+
+[project.optional-dependencies]
+gaskwaliteit = [
+    # Ingest van de werkelijke calorische gaswaarde, zie src/dph_preprocessing/gaskwaliteit.py.
+    # Optioneel: zonder dit pakket draait de pijplijn met --skip-gaskwaliteit op de vaste waarde.
+    "requests>=2.31,<3",
+]
+dev = [
+    "pytest>=8,<10",
+    "requests>=2.31,<3",
+    # Valideert datapackage.json (Frictionless Data Package v1) structureel; zie datapackage.py en
+    # tests/test_datapackage.py. Optioneel in de zin dat de generatie zelf frictionless niet nodig
+    # heeft (datapackage.py bouwt het bestand zelf); alleen de validatie ertegen gebruikt het, en die
+    # test slaat zichzelf over als het pakket ontbreekt.
+    "frictionless>=5,<6",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dph_preprocessing"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not network'"
+markers = [
+    "network: doet een echte netwerkcall naar mijnenergiedata.nl (niet standaard; draai met -m network)",
+]

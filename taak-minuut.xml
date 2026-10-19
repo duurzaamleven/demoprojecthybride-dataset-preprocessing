@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Description>De minuut-preprocessing van het Demoproject Hybride, onbeheerd en hervatbaar. Zie ontwerp-preprocessing-minuut.md paragraaf 10. Registreren met: schtasks /create /tn "DPH-minuut-preprocessing" /xml taak-minuut.xml /f</Description>
+    <URI>\DPH-minuut-preprocessing</URI>
+  </RegistrationInfo>
+  <Principals>
+    <Principal id="Author">
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <!-- Prioriteit 4 is normaal. Zonder dit element draait een taak op 7, en dat is onder normaal:
+         op een bezette laptop kruipt de run dan. Gemeten verschil: dezelfde locatie deed 11,7 s in
+         een gewone sessie en ruim zes minuten als taak op de standaardprioriteit. -->
+    <Priority>4</Priority>
+    <!-- Een laptop op accu mag de run niet blokkeren of halverwege afkappen; de run bewaakt zijn
+         eigen deadline en is hervatbaar, dus dat is de plek waar hij hoort te stoppen. -->
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <ExecutionTimeLimit>PT12H</ExecutionTimeLimit>
+    <IdleSettings>
+      <StopOnIdleEnd>false</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+  </Settings>
+  <Triggers>
+    <TimeTrigger>
+      <StartBoundary>2026-09-17T23:59:00</StartBoundary>
+    </TimeTrigger>
+  </Triggers>
+  <Actions Context="Author">
+    <Exec>
+      <Command>C:\dev\demoprojecthybride-dataset-preprocessing\draai_minuut.cmd</Command>
+    </Exec>
+  </Actions>
+</Task>
