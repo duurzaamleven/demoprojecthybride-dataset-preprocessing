@@ -33,7 +33,8 @@
   </Triggers>
   <Actions Context="Author">
     <Exec>
-      <Command>C:\dev\demoprojecthybride-dataset-preprocessing\draai_minuut.cmd</Command>
+      <!-- Vervang REPO_PAD door de map van je checkout voordat je deze taak importeert. -->
+      <Command>REPO_PAD\draai_minuut.cmd</Command>
     </Exec>
   </Actions>
 </Task>

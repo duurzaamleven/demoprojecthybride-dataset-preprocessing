@@ -426,7 +426,7 @@ kijkvorm; daar valt geen COP-decompositie op te rekenen.
 Die aanvraag heeft inmiddels **drie** onderbouwingen, en dat is de moeite waard om in de mail te
 noemen. De eindrapportage (bijlage 8) vermeldt dat alle sensoren **elke 10 seconden** naar het
 platform sturen; de CSV-export is dus met ongeveer een factor 90 uitgedund. Op 10 seconden zijn
-mogelijk: het scheiden van ontdooiverlies en pendelgedrag (Kladbloknotitie 35), de
+mogelijk: het scheiden van ontdooiverlies en pendelgedrag, de
 tapwaterfiltering van aanvoer- en retourtemperatuur volgens REDUCEDHEATCARB
 (`ontwerp-intervalsemantiek.md` §4.5), en een echte intervalgemiddelde in plaats van een
 trapeziumbenadering. Geen daarvan kan op kwartierdata.

@@ -14,7 +14,7 @@ rem De run is chunked en hervatbaar (CLAUDE.md): een deelbestand per blok woning
 rem herstart slaat over wat al klaar is. data/processed is vooraf leeg (de vorige uitvoer staat
 rem in data/processed-voor-teller-artefacten-20260922), dus dit begint gegarandeerd vanaf nul.
 
-cd /d C:\dev\demoprojecthybride-dataset-preprocessing
+cd /d "%~dp0"
 set PYTHONPATH=src
 set PYTHONUNBUFFERED=1
 if not exist data mkdir data

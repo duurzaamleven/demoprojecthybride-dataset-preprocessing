@@ -9,7 +9,7 @@ rem
 rem De run is hervatbaar per locatie: een locatie waarvan het definitieve bestand al bestaat wordt
 rem overgeslagen. Opnieuw starten kost dus niets wat al af is.
 
-cd /d C:\dev\demoprojecthybride-dataset-preprocessing
+cd /d "%~dp0"
 set PYTHONPATH=src
 set PYTHONUNBUFFERED=1
 rem De standaard arrow-geheugenpool geeft vrijgegeven blokken niet aan het systeem terug. Bij een
