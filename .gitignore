@@ -3,10 +3,6 @@
 # ze geeft geen recht de dataset zelf te herpubliceren. Zie GEBRUIKSVOORWAARDEN.md.
 data/
 
-# Uitvoer die adressen of andere herleidbare gegevens bevat, ook als hij ooit buiten data/
-# terechtkomt, zoals een lijst met kandidaat-adressen voor de bronhouder.
-*NIET_PUBLICEREN*
-
 # Python
 __pycache__/
 *.pyc
@@ -19,10 +15,3 @@ __pycache__/
 
 # Claude Code
 .claude/
-
-# Herleidbaarheidsanalyse: blijft buiten git tot de bronhouders op het rapport hebben kunnen
-# reageren (responsible disclosure). Daarna komt het rapport er als gewone commit bij.
-docs/herleidbaarheid.md
-docs/herleidbaarheid/
-analyse/herleidbaarheid/
-*NIET_PUBLICEREN*
